@@ -1,0 +1,308 @@
+@import "tailwindcss";
+
+/* `dark:` responds to the .dark class set by ThemeProvider, not just the OS preference,
+   so an explicit Light/Dark choice can override "system". */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f5faf8;
+  --foreground: #0f1a17;
+  --surface: #ffffff;
+  --surface-muted: #eef5f2;
+  --border: rgba(15, 26, 23, 0.1);
+  --border-strong: rgba(15, 26, 23, 0.2);
+  --brand-from: #10b981;
+  --brand-to: #0d9488;
+  --brand-ink: #047857;
+  --shadow-soft: 0 1px 2px rgba(15, 26, 23, 0.05), 0 4px 14px rgba(15, 26, 23, 0.05);
+  --shadow-lift: 0 2px 4px rgba(15, 26, 23, 0.06), 0 14px 32px rgba(4, 120, 87, 0.16);
+  --glow-a: rgba(16, 185, 129, 0.16);
+  --glow-b: rgba(13, 148, 136, 0.12);
+}
+
+.dark {
+  --background: #07100e;
+  --foreground: #e8f1ee;
+  --surface: #0f1b18;
+  --surface-muted: #14231f;
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.22);
+  --brand-ink: #34d399;
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.4), 0 6px 18px rgba(0, 0, 0, 0.3);
+  --shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.5), 0 16px 36px rgba(16, 185, 129, 0.18);
+  --glow-a: rgba(16, 185, 129, 0.14);
+  --glow-b: rgba(13, 148, 136, 0.1);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-line: var(--border);
+  --color-brand-ink: var(--brand-ink);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background-color: var(--background);
+  background-image:
+    radial-gradient(56rem 26rem at 8% -8%, var(--glow-a), transparent 65%),
+    radial-gradient(48rem 24rem at 100% 0%, var(--glow-b), transparent 65%);
+  background-repeat: no-repeat;
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* ---------- Surfaces ---------- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.card-hover {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.card-hover:hover,
+.card-hover.is-active {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift);
+  border-color: var(--brand-from);
+}
+
+.brand-gradient {
+  background-image: linear-gradient(135deg, var(--brand-from), var(--brand-to));
+}
+
+.brand-text {
+  background-image: linear-gradient(135deg, var(--brand-from), var(--brand-to));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- Form controls ---------- */
+
+.input {
+  width: 100%;
+  border-radius: 0.85rem;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  padding: 0.6rem 0.9rem;
+  font-size: 0.95rem;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.input::placeholder {
+  color: color-mix(in srgb, currentColor 45%, transparent);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--brand-from);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-from) 28%, transparent);
+}
+
+.btn {
+  border-radius: 9999px;
+  background-image: linear-gradient(135deg, var(--brand-from), var(--brand-to));
+  padding: 0.6rem 1.3rem;
+  font-weight: 600;
+  color: white;
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--brand-to) 32%, transparent);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    filter 0.15s ease;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+  box-shadow: 0 10px 22px color-mix(in srgb, var(--brand-to) 38%, transparent);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  box-shadow: none;
+}
+
+.btn-ghost {
+  border-radius: 9999px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  padding: 0.6rem 1.3rem;
+  font-weight: 500;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: var(--surface-muted);
+  border-color: var(--brand-from);
+}
+
+.chip {
+  border-radius: 9999px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  padding: 0.3rem 0.85rem;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.chip:hover {
+  border-color: var(--brand-from);
+}
+
+.chip-active {
+  border-color: transparent;
+  background-image: linear-gradient(135deg, var(--brand-from), var(--brand-to));
+  color: white;
+}
+
+/* ---------- Map ---------- */
+
+.pin-wrap {
+  background: none;
+  border: none;
+}
+
+.pin {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 3px solid #fff;
+  border-radius: 50% 50% 50% 0;
+  background: var(--c);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+  transform: rotate(-45deg);
+  transition: transform 0.15s ease;
+}
+
+.pin > span {
+  font-size: 16px;
+  line-height: 1;
+  transform: rotate(45deg);
+}
+
+.pin.pin-active {
+  transform: rotate(-45deg) scale(1.3);
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 1rem;
+  box-shadow: var(--shadow-lift);
+}
+
+.plan-popup {
+  display: grid;
+  gap: 2px;
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.plan-popup strong {
+  font-size: 0.9rem;
+}
+
+.plan-popup a {
+  margin-top: 4px;
+  font-weight: 600;
+  color: var(--brand-ink);
+}
+
+/* Dark mode: invert the OSM tiles instead of loading a second tile provider. */
+.dark .leaflet-tile-pane {
+  filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.9);
+}
+
+/* ---------- Loading ---------- */
+
+@keyframes shimmer {
+  to {
+    background-position-x: -200%;
+  }
+}
+
+.skeleton {
+  border-radius: 0.75rem;
+  background: linear-gradient(
+      100deg,
+      transparent 30%,
+      color-mix(in srgb, var(--foreground) 9%, transparent) 50%,
+      transparent 70%
+    )
+    var(--surface-muted);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+/* ---------- Animations ---------- */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(6deg); }
+}
+
+@keyframes float-alt {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(10px) rotate(-8deg); }
+}
+
+@keyframes word-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes drift-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-alt {
+  animation: float-alt 7s ease-in-out infinite;
+}
+
+.animate-word-in {
+  animation: word-in 0.4s ease-out;
+}
+
+.animate-drift-in {
+  animation: drift-in 0.5s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-float-alt,
+  .animate-word-in,
+  .animate-drift-in,
+  .skeleton {
+    animation: none;
+  }
+
+  .card-hover,
+  .btn {
+    transition: none;
+  }
+}
