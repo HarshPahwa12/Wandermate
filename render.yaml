@@ -1,0 +1,34 @@
+# Render blueprint for the backend. Create it with: Render dashboard -> New -> Blueprint -> pick this repo.
+# Values marked `sync: false` are asked for once in the dashboard and never stored in git.
+services:
+  - type: web
+    name: wandermate-api
+    runtime: docker
+    # Closest Render region to the Supabase database (Seoul).
+    region: singapore
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /api/health
+    envVars:
+      # Supabase -> Connect -> "Session pooler"
+      - key: DB_URL
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      # Render generates a long random value once; it signs everyone's login tokens.
+      - key: JWT_SECRET
+        generateValue: true
+      # The deployed frontend, e.g. https://wandermate.netlify.app (no trailing slash). Set after the Netlify deploy.
+      - key: CORS_ORIGINS
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      # One instance, so the in-memory chat broker is enough.
+      - key: CHAT_BROKER
+        value: simple
+      # Left unset for now: Google sign-in and password-reset emails are switched off in the UI.
+      # - key: GOOGLE_CLIENT_ID
+      # - key: SMTP_HOST / SMTP_PORT / SMTP_USERNAME / SMTP_PASSWORD / MAIL_FROM
