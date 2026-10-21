@@ -4,8 +4,7 @@
 [build]
   base = "frontend"
   command = "npm run build"
-  # Relative to base ("frontend"), so this is frontend/.next. Overrides whatever the dashboard says.
-  publish = ".next"
+  # No publish directory on purpose: a custom one switches off Netlify's Next.js support and every page 404s.
 
 [build.environment]
   # Next.js 16 needs Node 20.9 or newer.
