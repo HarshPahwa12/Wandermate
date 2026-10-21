@@ -4,6 +4,8 @@
 [build]
   base = "frontend"
   command = "npm run build"
+  # Relative to base ("frontend"), so this is frontend/.next. Overrides whatever the dashboard says.
+  publish = ".next"
 
 [build.environment]
   # Next.js 16 needs Node 20.9 or newer.
